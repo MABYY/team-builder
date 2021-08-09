@@ -4,35 +4,53 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const [formdata, setFormdata] = useState({name:"", email:"" , role:""})
+
+  const [members, setMembers] = useState([
+    { id: 1,
+      name:"Emily", 
+      email:"emily@lambda.com" , 
+      role:"Data Scientist"}
+  ]);
+
+  const [formdata, setFormdata] = useState({name:"", email:"" , role:""});
+
+
+// Add new member to the list of members
+  const addNewMember = (form) => {
+    setMembers([...members,{...form, id: Date.now() }])
+  }
+
+  // Fill in the form with the information provided by the new user
   const onInputChange = evt => {
     setFormdata({
       ...formdata,[evt.target.name]:evt.target.value
     })
   };
 
+  // OnSubmitFc triggers the fc that adds new member to the list of members
   const onSubmitFc = evt => {
     evt.preventDefault();
+    addNewMember(formdata)
+    console.log('members',members)
+
+
   }
   return (
     <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-        Forms - Team Builder
-        </p>
+        <p> Forms - Team Builder</p>
 
       <form onSubmit ={onSubmitFc}>
-        <label forHtml = 'username'>User name and surname </label>
+        <label htmlFor = 'username'>User name and surname </label>
         <input id = 'username' 
           name = 'name'  
           type = 'text' 
           // placeholder=' Name and Surname'
-          value = {formdata.name}
+          value = {formdata.name} // prepopulate with values
           onChange={onInputChange} />
         <br></br>
         <br></br>
 
-        <label forHtml = 'enteremail'> Email address </label>
+        <label htmlFor = 'enteremail'> Email address </label>
         <input id = 'enteremail' 
               name = 'email' 
               type = 'email' 
